@@ -1,0 +1,72 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&    display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <div class='theContainer'>
+      
+        <div class='bookStats'>
+            <div id='totalBooks'></div>
+            <div id='totalPages'></div>
+            <div id='totalRead'></div>
+        </div>
+
+        <!-- library to house the cards -->
+        <div class='library'>
+            
+            </div>
+
+
+
+
+
+
+
+   
+  
+
+      
+        </div>
+
+
+
+
+    </div>
+   
+
+    <div class='formButton'>
+        <img src='images/addPlus.svg'>
+    </div>
+
+ 
+    <!-- modal form popup -->
+   <div class='form'>
+    <form>
+        <fieldset>
+            <legend>Form Yeah</legend>
+            <div class="close">&times;</div>
+            <input type='text' class='bookForm' placeholder="title" id='title'>
+            <input type='text' class='bookForm' placeholder="author" id='author'>
+            <input type='text' class='bookForm' placeholder="page" id='page'>
+
+            <div class='readCheckBox'>
+                <input type='checkbox'  placeholder="" id='readOrNot'>
+                <label for='readOrNot'>I have read the book!</label>
+            </div>
+            <input type='button' id='submitBookInfo' value='add book to library'>
+        </fieldset>
+    </form>
+   </div>
+
+
+
+    <script src="script.js"></script>
+</body>
+</html>
