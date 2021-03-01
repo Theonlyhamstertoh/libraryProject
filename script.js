@@ -121,38 +121,68 @@ function deleteCard(e) {
 
 let currentElem = null;
 library.addEventListener('mouseover', (e) => {
-    console.log(true, 'related', e.relatedTarget.className, 'target', e.target.className)
-    e.target.style.background = 'pink'
+    let target = e.target.closest('.library > div');
+    console.log(target)
+    if(currentElem) return;
+    if(!target) return;
+    if(!library.contains(target)) return;
+    console.log(library.contains(target))
+    console.log(e.currentTarget)
+  
+
+    e.target.style.background = 'pink';
+    currentElem = target;
 
 
-}, true)
 
 
     
+}, false)
+
 
 
 library.addEventListener('mouseout', (e) => {
-    e.target.style.background = ''
-    console.log(false,'target', e.target.className,  'related', e.relatedTarget.className, )
+    if(!currentElem) return;
+    
+    let relatedTarget = e.relatedTarget;
+
+
+    while(relatedTarget) {
+        console.log(relatedTarget)
+        if(relatedTarget === currentElem) return;
+        relatedTarget = relatedTarget.parentNode;
+    }
+
+    currentElem = null;
+    e.target.style.backgroundColor = ''
+
+    
 }, false)
 
+
+
+
+
+
+
+
 // detects if any card is on hover mode or not and show icons
-for(let i = 0; i < cards.length; i++) {
+// for(let i = 0; i < cards.length; i++) {
 
-    cards[i].addEventListener('mouseenter', (e) => {
-        console.log('yes')
-        e.target.querySelector('.cardPopUp').style.display = 'block'
-    })
+//     cards[i].addEventListener('mouseenter', (e) => {
+//         console.log('yes')
+//         e.target.querySelector('.cardPopUp').style.display = 'block'
+//     })
 
-    cards[i].addEventListener('mouseleave', (e) => {
-        console.log('no')
-        e.target.querySelector('.cardPopUp').style.display = 'none';
-    })
-}
+//     cards[i].addEventListener('mouseleave', (e) => {
+//         console.log('no')
+//         e.target.querySelector('.cardPopUp').style.display = 'none';
+//     })
+// }
 
-const removeCard = document.querySelectorAll('.delete');
-for(let i = 0; i < removeCard.length; i++) {
-    removeCard[i].addEventListener('click', deleteCard);
+// const removeCard = document.querySelectorAll('.delete');
+// for(let i = 0; i < removeCard.length; i++) {
+//     removeCard[i].addEventListener('click', deleteCard);
 
-}
+// }
 
