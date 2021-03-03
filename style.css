@@ -155,11 +155,21 @@ input[type=button] {
 
 .line{
     background-color: #f68575;
-    margin: 15px ;
+    margin: 15px;
+ 
     height: 3px;
     border-radius: 100px;
 
 
+}
+
+
+.readIconInCard {
+    display: none;
+    position: absolute;
+    display: flex;
+    bottom: 5;
+    right: 5;
 }
 
 /* prevent user from selecting text */
@@ -180,7 +190,6 @@ input[type=button] {
 @keyframes blurCards {
     100% {filter: blur(1.5px) opacity(70%);}
 }
-
 
 
 /* the icons that pop up when hovering on the bookCards */

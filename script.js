@@ -99,23 +99,37 @@ class Book {
         library.appendChild(this.containerDiv);
         //then append the htmlMarkUp into the container
         this.containerDiv.appendChild(this.newCard)
+        
         //query select the icon from the container then add event listener so that all dynamically created cards have it.
-
-
         this.containerDiv.appendChild(this.newCard)
+
         this.delete = this.containerDiv.querySelector('.icons.delete');
         this.editing = this.containerDiv.querySelector('.icons.edit');
         this.cardRead = this.containerDiv.querySelector(`.icons.${this.readOrNot}`);
-     
+        this.line = this.containerDiv.querySelector('.line');
+        this.readIcon = this.containerDiv.querySelector('img');
+        this.readIcon.style.display = 'none';
+
+        if(this.readOrNot === 'readYes') {
+            this.readIcon.style.display = 'block'
+            this.line.style.marginRight = '33px'; 
+        } else {
+            this.readIcon.style.display = 'none';
+            this.line.style.marginRight = '15px';
+
+        }
         
 
 
-        //query select the icon from the container then add event listener so that all dynamically created cards have it.
+
         this.delete.addEventListener('click', deleteCard);
         this.editing.addEventListener('click', editCard);
         this.cardRead.addEventListener('click', cardRead);
         
         bookStatistics()
+        this.toLocalStorage();
+        
+
     }    
 
       
@@ -128,7 +142,8 @@ class Book {
             <div class='bookTotalpage smallText'>${this.page} pages</div>
         </div>
         <div class='line'></div>
-    
+
+        <img class='readIconInCard' src='images/totalRead.svg' alt='green check mark'>
         <!-- icon popup on bookCard hover -->
         <div class='cardPopUp'>
             <input type='image' class='icons ${this.readOrNot}' src='images/book.svg'>
@@ -141,15 +156,11 @@ class Book {
         this.bookTitle = this.containerDiv.querySelector('.bookTitle')
         this.bookAuthor = this.containerDiv.querySelector('.smallText')
         this.bookpage = this.containerDiv.querySelector('.bookTotalpage.smallText')
+        this.readOrNot = readOrNot.checked;
+        console.log(this.readOrNot)
+        this.bookRead();
 
-
-        if(this.readOrNot === true) {
-            this.readOrNot = 'readYes'; 
-            readCount++;
-        } else {
-            this.readOrNot = 'readNo'
-        }
-
+        // }
         //update the data stored in the object;
         this.title = title.value;
         this.author = author.value;
@@ -157,12 +168,38 @@ class Book {
 
         //update the HTML Values
         this.bookTitle.textContent = title.value;
-        this.bookAuthor.textContent = author.value;
+        this.bookAuthor.textContent = 'By ' + author.value;
         this.bookpage.textContent = Number(page.value) + ' pages';
-        console.log(this.bookTitle)
-        // this.containerDiv.innerHTML = this.htmlMarkup();
+        this.cardRead.className = `icons ${this.readOrNot}`
+
+
+        this.toLocalStorage();
     }
 
+
+    bookRead() {        
+        console.log(this.readIcon)
+        if(this.readOrNot === 'readYes') {
+            this.readOrNot = 'readNo';
+            this.readIcon.style.display = 'none'
+            this.line.style.marginRight = '15px';
+            readCount--
+            bookStatistics()
+            return this.cardRead.className = 'icons readNo';
+        } else if(this.readOrNot === 'readNo'){
+            this.readOrNot = 'readYes';
+            this.line.style.marginRight = '30px';
+            this.readIcon.style.display = 'block';
+            readCount++
+            bookStatistics()
+            return this.cardRead.className = 'icons readYes'; 
+        }
+        this.toLocalStorage();
+    }
+
+    toLocalStorage() {
+        localStorage.setItem('books', JSON.stringify(myLibrary))
+    }
 }
 
 //template book cards
@@ -177,18 +214,7 @@ myLibrary.push(
 
 //changes the books actually read count
 function cardRead(e) {
-    console.log(e.target.className)
-    if(e.target.className === 'icons readYes') {
-        console.log('readNO')
-        readCount--;
-        bookStatistics()
-        return e.target.className = 'icons readNo';
-    } else if(e.target.className === 'icons readNo'){
-        console.log('READYES')
-        readCount++
-        bookStatistics()
-        return e.target.className = 'icons readYes'; 
-    }
+    myLibrary[e.path[2].dataset.index].bookRead();
 }
 
 //store the card that is being edited
@@ -196,12 +222,17 @@ let beingEdit = null;
 // brings back the form information to allow editing
 function editCard(e) {
     this.editCardInfo = myLibrary[e.path[2].dataset.index];
+    
     title.value = this.editCardInfo.title;
     author.value = this.editCardInfo.author;
     page.value = this.editCardInfo.page;
-    readOrNot.checked = this.editCardInfo.readOrNot;
+    console.log(this.editCardInfo.readOrNot)
+    readOrNot.checked = this.editCardInfo.readOrNot === 'readYes' ? true : false;
+
     submitBookInfo.value = 'edit book';
     beingEdit = this.editCardInfo;
+    
+    
     form.classList.add('fadeIn')
 
 }
@@ -223,25 +254,21 @@ function addBookToLibrary() {
         form.classList.remove('fadeIn');
         form.classList.add('fadeOut');
         form.addEventListener('animationend', () => {form.classList.remove('fadeOut')})
-        title.value = '';
-        author.value = '';
-        page.value = '';
-        readOrNot.checked = false;
     } else {
             let book = new Book(title.value, author.value, page.value, readOrNot.checked);
             myLibrary.push(book);
-            title.value = '';
-            author.value = '';
-            page.value = '';
+         
             readOrNot.checked = false;
         
       
 
     }
-       
-
-    
-    
+ 
+    //resets afterwards
+    title.value = '';
+    author.value = '';
+    page.value = '';
+    readOrNot.checked = false;
 
    
 
@@ -266,7 +293,7 @@ function deleteCard(e) {
         } 
     }); 
     bookStatistics()
-
+    this.toLocalStorage();
     
 }
 
