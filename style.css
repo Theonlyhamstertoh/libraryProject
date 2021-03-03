@@ -5,14 +5,52 @@
 
 body {
     background-color: #f68575;
-    font-family:'Noto Sans';
     text-rendering: optimizeLegibility;
+    font-family:'Noto Sans';
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 
 .theContainer {
+    height: 90vh;
+    width: 95vw;
+    border-radius: 20px;
+    padding: 10px;
+    margin: 10px;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    box-shadow: 1px 1px 15px 1px #db7366;
+    background-color: #ffffff44;
     display: flex;
+
 }
+
+.content {
+    overflow: auto;
+}
+
+/* Scroll bar customization */
+::-webkit-scrollBar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: white;
+    border-radius: 100px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: black;
+    width: 15px;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: yellow;
+}
+
 
 
 /* sign up information */
@@ -51,22 +89,15 @@ body {
 }
 
 
-
-
 fieldset {
     padding: 10px;
     width: 200px;
     height: 300px;
     background-color: white;
     border: none;
-
-
 }
 
-
-
-
-.bookForm {
+.textBoxForm {
     padding: 5px;
     outline: none;
     border: none;
@@ -89,7 +120,7 @@ input[type=button] {
 
 /* Book cards */
 .library {
-    width: 1300px;
+    margin: 10px;
     margin: 15px;
     display: flex;
     flex-flow: row wrap;
@@ -101,7 +132,6 @@ input[type=button] {
     display: flex;
     position: relative;
     min-width: 200px;
-    
 
     flex-flow: column wrap;
     background-color: white;
@@ -153,9 +183,6 @@ input[type=button] {
 
 
 
-
-
-
 /* the icons that pop up when hovering on the bookCards */
 .cardPopUp {
     display: none;
@@ -167,7 +194,6 @@ input[type=button] {
     transform: translate(-50%, -50%);
 
 }
-
 
 .icons {
     background-color: #f68575;
@@ -182,6 +208,9 @@ input[type=button] {
     background-color: green;
 }
 
+.readNo {
+    background-color: red;
+}
 
 .delete {
     background-color: red;
@@ -200,3 +229,15 @@ input[type=button] {
     border-radius: 100px
 }
 
+
+/* book Stats */
+.bookStats {
+    background-color: white;
+    width: 200px;
+
+}
+
+.bookIcons {
+    width: 20px;
+    
+}

@@ -11,28 +11,35 @@
 </head>
 <body>
     <div class='theContainer'>
-      
-        <div class='bookStats'>
-            <div id='totalBooks'></div>
-            <div id='totalPages'></div>
-            <div id='totalRead'></div>
-        </div>
+        <div class='content'>
+            <!-- library to house the cards -->
+            <div class='library'></div>
 
-        <!-- library to house the cards -->
-        <div class='library'>
+
+            <div class='formButton'>
+                <input type="image" src='images/addPlus.svg'>
             </div>
 
-        </div>
+            <div class='bookStats'>
+                <input type='image' class='bookIcons' src='images/bookIcon.svg'>
+                <span id='totalBooks'></span>
 
+                <input type='image' class='bookIcons' src='images/pages.svg'>
+                <span id='totalPages'></span>
+                
+                <input type='image' class='bookIcon' src='images/totalRead.svg'>
+                <span id='totalRead'></span>
+            </div>
+        </div>
+    </div>
+  
 
 
 
 
    
 
-    <div class='formButton'>
-        <img src='images/addPlus.svg'>
-    </div>
+ 
 
  
     <!-- modal form popup -->
@@ -41,9 +48,9 @@
         <fieldset>
             <legend>Form Yeah</legend>
             <div class="close">&times;</div>
-            <input type='text' class='bookForm' placeholder="title" id='title'>
-            <input type='text' class='bookForm' placeholder="author" id='author'>
-            <input type='text' class='bookForm' placeholder="page" id='page'>
+            <input type='text' class='textBoxForm' placeholder="title" id='title'>
+            <input type='text' class='textBoxForm' placeholder="author" id='author'>
+            <input type='text' class='textBoxForm' placeholder="page" id='page'>
 
             <div class='readCheckBox'>
                 <input type='checkbox'  placeholder="" id='readOrNot'>
