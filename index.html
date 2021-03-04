@@ -13,24 +13,34 @@
     <div class='theContainer'>
         <div class='content'>
             <!-- library to house the cards -->
-            <div class='library'></div>
-
-
-            <div class='formButton'>
-                <input type="image" src='images/addPlus.svg'>
+            <div class='library '>
+                <div class='bookCards formButton'>
+                    <input type="image" style='background-color: black;' src='images/addPlus.svg'>
+             
+            
+            
+                </div>
             </div>
 
             <div class='bookStats'>
-                <input type='image' class='bookIcons' src='images/bookIcon.svg'>
-                <span id='totalBooks'></span>
+                <div class='divider'>
+                    <input type='image' class='bookIcons' src='images/bookIcon.svg'>
+                    <span id='totalBooks'></span>
 
-                <input type='image' class='bookIcons' src='images/pages.svg'>
-                <span id='totalPages'></span>
-                
-                <input type='image' class='bookIcon' src='images/totalRead.svg'>
-                <span id='totalRead'></span>
-            </div>
+                </div>
+                <div class='divider'>
+                    <input type='image' class='bookIcons' src='images/pages.svg'>
+                    <span id='totalPages'></span>
+                </div>
+                <div class='divider'>
+                    <input type='image' class='bookIcons' src='images/totalRead.svg'>
+                    <span id='totalRead'></span>
+                </div>
+      
+
+
         </div>
+    
     </div>
   
 
@@ -44,13 +54,13 @@
  
     <!-- modal form popup -->
    <div class='form'>
-    <form>
+    <form autocomplete="off">
         <fieldset>
             <legend>Form Yeah</legend>
             <div class="close">&times;</div>
             <input type='text' class='textBoxForm' placeholder="title" id='title'>
             <input type='text' class='textBoxForm' placeholder="author" id='author'>
-            <input type='text' class='textBoxForm' placeholder="page" id='page'>
+            <input type='number' class='textBoxForm' placeholder="page" id='page'>
 
             <div class='readCheckBox'>
                 <input type='checkbox'  placeholder="" id='readOrNot'>

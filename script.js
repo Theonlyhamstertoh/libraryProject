@@ -20,6 +20,9 @@ const totalBooks = document.getElementById('totalBooks');
 const totalPages = document.getElementById('totalPages');
 const totalRead = document.getElementById('totalRead');
 
+
+    
+
 /*                 FORMS                */
 
 // closes pop up form
@@ -28,11 +31,15 @@ closeForm.addEventListener('click', () => {
     form.classList.add('fadeOut');
 
     // when fadeOut ends, it removes the class
-    form.addEventListener('animationend', () => {form.classList.remove('fadeOut')})
+    form.addEventListener('animationend', () => {
+        form.classList.remove('fadeOut');
+    })
+
 });
 
 // opens pop up form
-formButton.addEventListener('click', () => {
+formButton.addEventListener('click', (e) => {
+    submitBookInfo.value = 'add book to library';
     title.value = '';
     author.value = '';
     page.value = '';
@@ -48,17 +55,15 @@ formButton.addEventListener('click', () => {
 submitBookInfo.addEventListener('click', addBookToLibrary)
 
 
-
+let currentBook = null;
 
 /*                 Book and Library                */
 
 //book array library
 let myLibrary =[];
 
-
 let pages = 0;
 let bookCount = 0; 
-let readCount = 0;
 // the book card constructor
 class Book {
     constructor(title, author, page, readOrNot) {
@@ -66,16 +71,18 @@ class Book {
         this.title = title;
         this.author = author;
         this.page = Number(page);
-        if(readOrNot === true) {
+        if(readOrNot === true || readOrNot === 'readYes') {
             this.readOrNot = 'readYes'; 
-            readCount++;
         } else {
             this.readOrNot = 'readNo'
         }
         this.count = bookCount;
-        pages += parseInt(this.page);
         bookCount++; //the book order to be able to sort newest or oldest
-
+        this.create();
+    }    
+    
+    create() {
+        pages += parseInt(this.page);
         this.containerDiv = document.createElement('div');
         this.containerDiv.dataset.index = this.count;
         this.containerDiv.classList.add('bookCards');
@@ -123,16 +130,22 @@ class Book {
 
 
         this.delete.addEventListener('click', deleteCard);
-        this.editing.addEventListener('click', editCard);
+        this.editing.addEventListener('click', () => {
+            submitBookInfo.value = 'edit book';
+            title.value = this.title;
+            author.value = this.author;
+            page.value = this.page;
+            readOrNot.checked = this.readOrNot === 'readYes' ? true : false;
+        
+            form.classList.add('fadeIn')
+            currentBook = this;
+            
+
+        });
         this.cardRead.addEventListener('click', cardRead);
         
-        bookStatistics()
-        this.toLocalStorage();
-        
-
-    }    
-
-      
+        bookStatistics()   
+    }
 
     htmlMarkup() {
         return `
@@ -153,87 +166,92 @@ class Book {
     }
 
     edit() {
-        this.bookTitle = this.containerDiv.querySelector('.bookTitle')
-        this.bookAuthor = this.containerDiv.querySelector('.smallText')
-        this.bookpage = this.containerDiv.querySelector('.bookTotalpage.smallText')
-        this.readOrNot = readOrNot.checked;
-        console.log(this.readOrNot)
-        this.bookRead();
-
-        // }
-        //update the data stored in the object;
-        this.title = title.value;
-        this.author = author.value;
-        this.page = Number(page.value);
-
-        //update the HTML Values
-        this.bookTitle.textContent = title.value;
-        this.bookAuthor.textContent = 'By ' + author.value;
-        this.bookpage.textContent = Number(page.value) + ' pages';
+        // updating HTML
+        this.containerDiv.querySelector('.bookTitle').textContent = title.value;
+        this.containerDiv.querySelector('.smallText').textContent = 'By ' + author.value;
+        this.containerDiv.querySelector('.bookTotalpage.smallText').textContent = page.value + ' pages';
         this.cardRead.className = `icons ${this.readOrNot}`
 
+        //update the data stored in the object;
+        this.title = title.value;
+        this.author =  author.value;
+        this.page = Number(page.value);
 
-        this.toLocalStorage();
+        this.readOrNot = readOrNot.checked;
+        this.readOrNot === true ? this.readOrNot = 'readNo': this.readOrNot = 'readYes';
+        this.bookRead();
+
+   
+
+
     }
 
 
-    bookRead() {        
-        console.log(this.readIcon)
+    bookRead() {     
         if(this.readOrNot === 'readYes') {
             this.readOrNot = 'readNo';
             this.readIcon.style.display = 'none'
             this.line.style.marginRight = '15px';
-            readCount--
             bookStatistics()
+            saveLocal();
             return this.cardRead.className = 'icons readNo';
         } else if(this.readOrNot === 'readNo'){
             this.readOrNot = 'readYes';
             this.line.style.marginRight = '30px';
             this.readIcon.style.display = 'block';
-            readCount++
             bookStatistics()
+            saveLocal();
             return this.cardRead.className = 'icons readYes'; 
         }
-        this.toLocalStorage();
-    }
+      
 
-    toLocalStorage() {
-        localStorage.setItem('books', JSON.stringify(myLibrary))
     }
 }
 
-//template book cards
-myLibrary.push(
-    new Book('The Obstacle is the Way', 'Ryan Holiday', '201', false),
-    new Book('AntiFragile', 'Nassim Nicholas Taleb', '518', false),
-    new Book('Outliers', 'Malcolm Gladwell', '250', true),
-    new Book('Tools of Titan', 'Tim Ferriss', '618', true),
-    new Book('Meditation', 'Marcus Aurelius', '190', true),
-    new Book('Ego Is The Enemy', 'Ryan Holiday', '256', true))
-  
+
+//template cards
+if(!localStorage.getItem('templateCards')) {
+    console.log('im running, sorry.')
+    myLibrary.push(
+        new Book('The Obstacle is the Way', 'Ryan Holiday', '201', false),
+        new Book('AntiFragile', 'Nassim Nicholas Taleb', '518', false),
+        new Book('Outliers', 'Malcolm Gladwell', '250', true),
+        new Book('Tools of Titan', 'Tim Ferriss', '618', true),
+        new Book('Meditation', 'Marcus Aurelius', '190', true),
+        new Book('Ego Is The Enemy', 'Ryan Holiday', '256', true));
+        saveLocal();
+
+    }
+    
+
+
+/*              LOCAL STORAGE           */
+function saveLocal() {
+    localStorage.setItem('myLibrary', JSON.stringify(myLibrary))
+}
+
+restoreLocal();
+function restoreLocal() {
+    if(!localStorage.getItem('templateCards')) {
+        localStorage.setItem('templateCards', true);
+    } else {
+        objects = JSON.parse(localStorage.getItem('myLibrary'));    
+        for(let element of objects) {
+            if(element !== null) {
+                myLibrary.push(new Book(element.title, element.author, element.page, element.readOrNot))
+            }
+        }
+        saveLocal();
+    }
+   
+}    
+
+
 
 //changes the books actually read count
 function cardRead(e) {
     myLibrary[e.path[2].dataset.index].bookRead();
-}
-
-//store the card that is being edited
-let beingEdit = null;
-// brings back the form information to allow editing
-function editCard(e) {
-    this.editCardInfo = myLibrary[e.path[2].dataset.index];
-    
-    title.value = this.editCardInfo.title;
-    author.value = this.editCardInfo.author;
-    page.value = this.editCardInfo.page;
-    console.log(this.editCardInfo.readOrNot)
-    readOrNot.checked = this.editCardInfo.readOrNot === 'readYes' ? true : false;
-
-    submitBookInfo.value = 'edit book';
-    beingEdit = this.editCardInfo;
-    
-    
-    form.classList.add('fadeIn')
+    saveLocal();
 
 }
 
@@ -246,25 +264,27 @@ function addBookToLibrary() {
         return;
     }
 
-    if(beingEdit !== null) {
-        beingEdit.edit();
-        beingEdit = null;
-
+    if(form.className === 'form fadeIn' && currentBook!== null) {
+        currentBook.edit();
+        currentBook = null;
         //form added to close 
         form.classList.remove('fadeIn');
         form.classList.add('fadeOut');
-        form.addEventListener('animationend', () => {form.classList.remove('fadeOut')})
+        form.addEventListener('animationend', () => {
+            form.classList.remove('fadeOut');
+        })
+
     } else {
-            let book = new Book(title.value, author.value, page.value, readOrNot.checked);
-            myLibrary.push(book);
-         
-            readOrNot.checked = false;
-        
+        let book = new Book(title.value, author.value, page.value, readOrNot.checked);
+        myLibrary.push(book);
+        readOrNot.checked = false;
+        saveLocal();
+    
       
 
     }
  
-    //resets afterwards
+    // resets afterwards
     title.value = '';
     author.value = '';
     page.value = '';
@@ -275,7 +295,6 @@ function addBookToLibrary() {
 
 }
 
-
 //delete book from DOM and library
 function deleteCard(e) {
     //get the targetIndex
@@ -285,21 +304,27 @@ function deleteCard(e) {
     library.removeChild(targetIndex);
 
     //remove from myLibrary array
-    myLibrary.filter((el, i) => {
+    myLibrary.filter((element, i) => {
         if(i === Number(targetIndex.dataset.index)) {
-            pages -= parseInt(el.page);
-            if(el.readOrNot === 'readYes') {return readCount--}
-            return myLibrary[i] = null;
+            pages -= parseInt(element.page);
+            // if(element.readOrNot === 'readYes') {}
+            myLibrary[i] = null;
         } 
     }); 
     bookStatistics()
-    this.toLocalStorage();
+    saveLocal();
     
 }
 
 /*           bookStats          */
-bookStatistics(); // run it once first
+bookStatistics();
 function bookStatistics() {
+    let readCount = 0;
+    for(let element of myLibrary) {
+        if(element !== null) {
+            if(element.readOrNot === 'readYes') readCount++
+        }
+    }
     totalBooks.textContent =  cards.length;
     totalPages.textContent = pages; 
     totalRead.textContent = readCount;
@@ -309,5 +334,5 @@ function bookStatistics() {
 
 
 
-
+  
 
