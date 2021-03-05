@@ -1,6 +1,11 @@
 # libraryProject
 **Link To Demo**: https://theonlyhamstertoh.github.io/libraryProject/ 
 
+## Demo Image ##
+![alt text](https://github.com/theonlyhamstertoh/libraryProject/blob/main/images/project.png?raw=true)
+
+### Mobile Display ###
+![alt text](https://github.com/theonlyhamstertoh/libraryProject/blob/main/images/onPhone.png?raw=true)
 ### Skills Learned ###
 * Learned how to use event delegation so I don't have to write 7000 addEventListeners();
 * Learned DOM manipulation by utilizing ```Range.createContextualFragment()``` to bring a truckload of HTML into JS 

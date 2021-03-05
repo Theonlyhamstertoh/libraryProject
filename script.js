@@ -27,6 +27,7 @@ const content = document.querySelector('.content');
 
 // closes pop up form
 closeForm.addEventListener('click', () => {
+  
     form.classList.remove('fadeIn');
     form.classList.add('fadeOut');
 
@@ -270,31 +271,43 @@ function addBookToLibrary() {
     if(form.className === 'form fadeIn' && currentBook!== null) {
         currentBook.edit();
         currentBook = null;
-        //form added to close 
+
         form.classList.remove('fadeIn');
         form.classList.add('fadeOut');
+    
+        // when fadeOut ends, it removes the class
         form.addEventListener('animationend', () => {
             form.classList.remove('fadeOut');
         })
         content.style.filter = 'none';
+    
     } else {
         let book = new Book(title.value, author.value, page.value, readOrNot.checked);
+        
         myLibrary.push(book);
         bookStatistics();
         readOrNot.checked = false;
         saveLocal();
+        form.classList.remove('fadeIn');
+        form.classList.add('fadeOut');
     
-      
+        // when fadeOut ends, it removes the class
+        form.addEventListener('animationend', () => {
+            form.classList.remove('fadeOut');
+        })
+        content.style.filter = 'none';
+    
+    
+       
 
     }
- 
+
     // resets afterwards
     title.value = '';
     author.value = '';
     page.value = '';
     readOrNot.checked = false;
 
-   
 
 
 }

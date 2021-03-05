@@ -348,7 +348,7 @@ input[type=button] {
     padding: 5px;
     width: 35px;
     outline: none;
-    box-shadow: 1px 1px 5px 1px #d4acb4;
+    box-shadow: 1px 1px 5px 1px #b4b0af;
 
 }
 
@@ -386,7 +386,7 @@ input[type=button] {
     margin-bottom: 10px;
     align-self: center;
     display: flex;
-    width: 210px;
+    width: 320px;
     height: 55px;
     border-radius: 30px;
     /* font-family: monospace; */
