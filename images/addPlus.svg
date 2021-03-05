@@ -1,11 +1,1 @@
-<svg width="32" height="32" xmlns="http://www.w3.org/2000/svg">
-
- <g>
-  <title>background</title>
-  <rect fill="none" id="canvas_background" height="402" width="582" y="-1" x="-1"/>
- </g>
- <g>
-  <title>Layer 1</title>
-  <path stroke="#ffffff" fill="#fff" id="svg_1" d="m28,14l-10,0l0,-10c0,-1.104 -0.896,-2 -2,-2s-2,0.896 -2,2l0,10l-10,0c-1.104,0 -2,0.896 -2,2s0.896,2 2,2l10,0l0,10c0,1.104 0.896,2 2,2s2,-0.896 2,-2l0,-10l10,0c1.104,0 2,-0.896 2,-2s-0.896,-2 -2,-2z"/>
- </g>
-</svg>
+<svg id="Capa_1" enable-background="new 0 0 512 512" height="512" viewBox="0 0 512 512" width="512" xmlns="http://www.w3.org/2000/svg"><g><path d="m256 0-154.947 256 154.947 256c141.16 0 256-114.84 256-256s-114.84-256-256-256z" fill="#f71e78"/><path d="m0 256c0 141.16 114.84 256 256 256v-512c-141.16 0-256 114.84-256 256z" fill="#ff4f75"/><path d="m256 60-118.632 196 118.632 196c108.075 0 196-87.925 196-196s-87.925-196-196-196z" fill="#ff4f75"/><path d="m60 256c0 108.075 87.925 196 196 196v-392c-108.075 0-196 87.925-196 196z" fill="#ff776b"/><path d="m301 211v-61h-45l-30 106 30 106h45v-61h61v-90z" fill="#fff0bf"/><path d="m211 150v61h-61v90h61v61h45v-212z" fill="#fff"/></g></svg>

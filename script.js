@@ -13,15 +13,15 @@ const cardPopUp = document.querySelector('.cardPopUp');
 const formButton = document.querySelector('.formButton');
 const form = document.querySelector('.form')
 const closeForm = document.querySelector('.close');
-
+const plus = document.getElementById('plus');
 //bookStats
 const bookStats = document.querySelector('.bookStats');
 const totalBooks = document.getElementById('totalBooks');
 const totalPages = document.getElementById('totalPages');
 const totalRead = document.getElementById('totalRead');
 
+const content = document.querySelector('.content');
 
-    
 
 /*                 FORMS                */
 
@@ -34,6 +34,8 @@ closeForm.addEventListener('click', () => {
     form.addEventListener('animationend', () => {
         form.classList.remove('fadeOut');
     })
+    content.style.filter = 'none';
+
 
 });
 
@@ -47,7 +49,9 @@ formButton.addEventListener('click', (e) => {
     if(form.classList.contains('fadeOut')) { 
         form.classList.remove('fadeOut')
     }
-    form.classList.add('fadeIn')
+    form.classList.add('fadeIn');
+   content.style.filter = 'blur(5px)';
+
 
 });
 
@@ -62,7 +66,6 @@ let currentBook = null;
 //book array library
 let myLibrary =[];
 
-let pages = 0;
 let bookCount = 0; 
 // the book card constructor
 class Book {
@@ -79,10 +82,11 @@ class Book {
         this.count = bookCount;
         bookCount++; //the book order to be able to sort newest or oldest
         this.create();
+        bookStatistics()   
+
     }    
     
     create() {
-        pages += parseInt(this.page);
         this.containerDiv = document.createElement('div');
         this.containerDiv.dataset.index = this.count;
         this.containerDiv.classList.add('bookCards');
@@ -136,7 +140,7 @@ class Book {
             author.value = this.author;
             page.value = this.page;
             readOrNot.checked = this.readOrNot === 'readYes' ? true : false;
-        
+            content.style.filter = 'blur(5px)';
             form.classList.add('fadeIn')
             currentBook = this;
             
@@ -144,7 +148,6 @@ class Book {
         });
         this.cardRead.addEventListener('click', cardRead);
         
-        bookStatistics()   
     }
 
     htmlMarkup() {
@@ -181,6 +184,7 @@ class Book {
         this.readOrNot === true ? this.readOrNot = 'readNo': this.readOrNot = 'readYes';
         this.bookRead();
 
+
    
 
 
@@ -211,7 +215,6 @@ class Book {
 
 //template cards
 if(!localStorage.getItem('templateCards')) {
-    console.log('im running, sorry.')
     myLibrary.push(
         new Book('The Obstacle is the Way', 'Ryan Holiday', '201', false),
         new Book('AntiFragile', 'Nassim Nicholas Taleb', '518', false),
@@ -273,10 +276,11 @@ function addBookToLibrary() {
         form.addEventListener('animationend', () => {
             form.classList.remove('fadeOut');
         })
-
+        content.style.filter = 'none';
     } else {
         let book = new Book(title.value, author.value, page.value, readOrNot.checked);
         myLibrary.push(book);
+        bookStatistics();
         readOrNot.checked = false;
         saveLocal();
     
@@ -306,7 +310,6 @@ function deleteCard(e) {
     //remove from myLibrary array
     myLibrary.filter((element, i) => {
         if(i === Number(targetIndex.dataset.index)) {
-            pages -= parseInt(element.page);
             // if(element.readOrNot === 'readYes') {}
             myLibrary[i] = null;
         } 
@@ -320,12 +323,14 @@ function deleteCard(e) {
 bookStatistics();
 function bookStatistics() {
     let readCount = 0;
-    for(let element of myLibrary) {
+    let pages = 0;
+    for(const element of myLibrary) {
         if(element !== null) {
-            if(element.readOrNot === 'readYes') readCount++
+            pages += element.page;
+            if(element.readOrNot === 'readYes') readCount++;
         }
     }
-    totalBooks.textContent =  cards.length;
+    totalBooks.textContent =  cards.length -1;
     totalPages.textContent = pages; 
     totalRead.textContent = readCount;
 }

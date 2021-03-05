@@ -10,33 +10,32 @@ body {
     font-family:'Noto Sans';
     display: flex;
     justify-content: center;
+    align-items: center;
 
 
 }
 
-
 .theContainer {
-    height: 95vh;
+    margin: 10px;
+    height: 90vh;
     width: 95vw;
     border-radius: 20px;
     padding: 10px;
-    margin: 10px;
     box-shadow: 
         1px 1px 10px 1px #cc9a938f,
         inset 0 0 1px 3px rgba(253, 243, 243, 0.281),
         inset 0px 0px 30px 1px rgba(250, 250, 250, 0.774);
     background: linear-gradient(to right,#ffffff44,#ffc3cdc9);
 
-
 }
 
 .content {
-    margin: 10px 0;
     overflow: auto;
     scroll-behavior: smooth;
     height: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
 
 
 }
@@ -48,6 +47,7 @@ body {
 
 ::-webkit-scrollbar-track {
     border-radius: 100px;
+    background-color: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -57,7 +57,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background-color: yellow;
+    background-color: #d67f8e;
 }
 
 
@@ -65,13 +65,22 @@ body {
 /* sign up information */
 .form {
     display: none;
+    background-color: white;
+    box-shadow: 4px 4px 1px 4px #f5b8c0ea,
+    inset 1px 1px 1px 1px #fb9aac;
+    border-radius: 30px;
+    padding: 20px;
+    height: 300px;
+    width: 250px;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     opacity: 0;
     
+    
 }
+
 
 .fadeIn{
     display: block;
@@ -80,6 +89,7 @@ body {
     animation-fill-mode: forwards;
 
 }
+
 
 .fadeOut {
     display: block;
@@ -94,29 +104,112 @@ body {
 }
 @keyframes fadeIn{
     from{opacity: 0;}
-    to{opacity: 1;}
+    to{
+        opacity: 1;
+    }
 }
 
 
-fieldset {
-    padding: 10px;
-    width: 200px;
-    height: 300px;
-    background-color: white;
-    border: none;
-}
+
 
 .textBoxForm {
-    padding: 5px;
+    padding: 10px;
     outline: none;
-    border: none;
-    border-bottom: dotted 3px black;
-    width: 150px;
+    border: 1px solid rgb(238, 235, 235);
+    box-shadow: 0px 0px 5px 1px rgb(236, 231, 231);
+    width: 250px;
     margin-bottom: 20px;
+    border-radius: 20px;
 }
 
+
+.readCheckBox input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  
+}
+
+.checkmark {
+    position: absolute;
+    height: 25px;
+    width: 25px;
+    background-color: white;
+    border: 1px solid rgb(199, 196, 196);
+    border-radius: 100%;
+}
+
+.readCheckBox:hover input ~ .checkmark {
+    background-color: #ffc19e;
+  }
+
+.readCheckBox input:checked ~ .checkmark {
+    background: linear-gradient(to right, #faba94, #f5a5b2); 
+  }
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+.readCheckBox input:checked ~ .checkmark:after {
+    display: block;
+
+}
+
+.readCheckBox .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+
+#spanText {
+    margin-left: 35px;
+    font-size: .9em;
+}
+
+#submitBookInfo {
+    margin-top: 30px;
+    background: linear-gradient(to right, #ffc19e, #ffc3cd); 
+    border: none;
+    font-weight: 600;
+    padding: 12px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 20px 1px #f6cad3;
+    outline: none;
+    text-align: center;
+    width: 250px;
+}
+
+#submitBookInfo:hover {
+    background: linear-gradient(to right, #fcae82, #fa8da0); 
+}
+#submitBookInfo:active {
+    background: linear-gradient(to right, #ffdac3, #f6b3be); 
+
+}
+
+
+.formTop {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.textbox {
+    display: flex;
+    flex-direction: column;
+
+}
 .close {
     cursor: pointer;
+    width: 20px;
 }
 
 
@@ -144,7 +237,8 @@ input[type=button] {
     min-height: 200px;
     flex: 0 1 ;
     flex-flow: column wrap;
-    background-color: white;
+    box-shadow: 3px 3px 1px 1px #f39dab98;
+    background-color: rgb(255, 255, 255);
     border-radius: 10px;
     justify-content: space-between;
 }
@@ -155,11 +249,30 @@ input[type=button] {
         min-width: 150px;
         min-height: 100px;
     }
+
+  
+   
+}
+
+@media screen and (min-width: 50px) {
+    #plus:hover {
+        transform: scale(2);
+    }
+}
+
+.addIcon {
+    justify-content: center;
+    align-content: center;
 }
 
 
+#plus {
+    transition: all .2s ease-in-out;
+    cursor: pointer;
 
-  
+}
+
+
 
 
 .bookTitle {
@@ -177,7 +290,7 @@ input[type=button] {
 }
 
 .line{
-    background-color: #f68575;
+    background: linear-gradient(to right, #facbae, #f6b3be); 
     margin: 15px;
  
     height: 3px;
@@ -201,13 +314,13 @@ input[type=button] {
 }
 
 /* bookCards hover animations */
-.bookCards:hover > *:not(.cardPopUp){
-
+.bookCards:hover > *:not(.cardPopUp):not(.formButton){
     animation-name: blurCards;
     animation-fill-mode: forwards;
     animation-duration: 300ms;
 
 }
+
 
 /* blur affect on cards when hover */
 @keyframes blurCards {
@@ -224,6 +337,7 @@ input[type=button] {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    transition: all .2s ease-in-out;
 
 }
 
@@ -233,11 +347,23 @@ input[type=button] {
     border-radius: 100%;
     padding: 5px;
     width: 35px;
+    outline: none;
+    box-shadow: 1px 1px 5px 1px #d4acb4;
+
+}
+
+.icons:hover {
+    background: linear-gradient(to right, #f5bb96, #f8899b); 
+
+}
+
+.edit {
+    background-color: #fa8da0;
 
 }
 
 .readYes {
-    background-color: green;
+    background-color: rgb(26, 153, 26);
 }
 
 .readNo {
@@ -248,38 +374,41 @@ input[type=button] {
     background-color: red;
 }
 
-
-/* form Button at bottom right*/
-.formbutton {
-    display: flex;
-    justify-content: center;
-    cursor: pointer;
-    align-items: center;
+.delete:active {
+    background-color: red;
 }
+
 
 
 /* book Stats */
 .bookStats {
+    margin-top: 50px;
+    margin-bottom: 10px;
+    align-self: center;
     display: flex;
-    
+    width: 210px;
+    height: 55px;
+    border-radius: 30px;
     /* font-family: monospace; */
     font-size: .9em;
-    
+    background-color: rgb(255, 255, 255);
+    box-shadow: 3px 3px 1px 1px #f39dab98;
     justify-content: center;
-
 }
+
+
 
 .divider {
     display: flex;
     align-items: center;
-    margin-right: 5px;    
+    margin-right: 10px;    
 
 }
 .bookIcons {
     outline: none;
     cursor:default;
     margin-right: 5px;
-    width: 25px;
+    width: 30px;
     
 }
 

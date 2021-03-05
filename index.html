@@ -14,12 +14,10 @@
         <div class='content'>
             <!-- library to house the cards -->
             <div class='library '>
-                <div class='bookCards formButton'>
-                    <input type="image" style='background-color: black;' src='images/addPlus.svg'>
-             
-            
-            
+                <div class='bookCards addIcon'>
+                        <img type="image" class='formButton' id='plus' style='width: 70px;' src='images/addPlus.svg'>
                 </div>
+               
             </div>
 
             <div class='bookStats'>
@@ -40,7 +38,6 @@
 
 
         </div>
-    
     </div>
   
 
@@ -55,19 +52,26 @@
     <!-- modal form popup -->
    <div class='form'>
     <form autocomplete="off">
-        <fieldset>
-            <legend>Form Yeah</legend>
-            <div class="close">&times;</div>
+        <div class='formTop'>
+            <span>Add A Book</span>
+            <span><img  class="close" src='images/cancel2.svg' alt='cancel'></span>
+        </div>
+        <div class='textbox'>
             <input type='text' class='textBoxForm' placeholder="title" id='title'>
             <input type='text' class='textBoxForm' placeholder="author" id='author'>
             <input type='number' class='textBoxForm' placeholder="page" id='page'>
-
-            <div class='readCheckBox'>
-                <input type='checkbox'  placeholder="" id='readOrNot'>
-                <label for='readOrNot'>I have read the book!</label>
-            </div>
-            <input type='button' id='submitBookInfo' value='add book to library'>
-        </fieldset>
+        </div>
+    
+        <div class='readCheckBox'>
+            <label class='label' for='readOrNot'>
+                <input type='checkbox' id='readOrNot'>
+                <span class='checkmark'></span>
+                <span id='spanText'><em>I swore to God I read the book</em></span>
+                
+            </label>
+           
+        </div>
+        <input type='button' id='submitBookInfo' value='add book to library'>
     </form>
    </div>
 
